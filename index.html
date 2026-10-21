@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!--
+  ============================================================
+  NODO IA — Landing page (HTML + CSS + JS, sin build)
+  ------------------------------------------------------------
+  ANTES DE PUBLICAR, REEMPLAZÁ:
+  · Marca / dominio: "Nodo IA" / nodoia.ai
+  · Email: hola@nodoia.ai
+  · WhatsApp: +54 9 11 5555-5555 (placeholder)
+  · Precios de mentoría: US$ 1.000 / 1.500 / 1.800
+  · Métricas, testimonios y casos son de ejemplo.
+  El formulario arma un mailto; se puede conectar a Calendly,
+  Stripe, Mercado Pago o un CRM cambiando el handler del submit.
+  ============================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nodo IA — Software, cursos y mentoría para construir con IA</title>
+<meta name="description" content="Aprende IA construyendo. Cursos prácticos, software listo para usar y mentorías 1:1 desde US$ 1.000. Reserva tu cupo.">
+<meta name="theme-color" content="#07090E">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://nodoia.ai/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Nodo IA">
+<meta property="og:title" content="Nodo IA — Construye con IA. Sin perder meses.">
+<meta property="og:description" content="Software, cursos y mentoría 1:1 para llevar tu proyecto de IA de la idea al sistema funcionando.">
+<meta property="og:url" content="https://nodoia.ai/">
+<meta property="og:image" content="https://nodoia.ai/og-image.jpg">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%23090B11'/%3E%3Cpath d='M10 25 18 11l8 14' fill='none' stroke='%23C7F94E' stroke-width='2'/%3E%3Ccircle cx='18' cy='11' r='3' fill='%23C7F94E'/%3E%3Ccircle cx='10' cy='25' r='3' fill='%238B5CF6'/%3E%3Ccircle cx='26' cy='25' r='3' fill='%2322D3EE'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+/* ============================================================
+   1. Tokens y base
+   ============================================================ */
+:root{
+  --bg:          #07090E;
+  --bg-2:        #0A0D14;
+  --surface:     #0F131C;
+  --surface-2:   #141926;
+  --ink:         #F3F6FB;
+  --muted:       #98A3B3;
+  --muted-2:     #7E8B9E;
+  --line:        rgba(255,255,255,.085);
+  --line-strong: rgba(255,255,255,.16);
+  --lime:        #C7F94E;
+  --lime-soft:   rgba(199,249,78,.12);
+  --violet:      #8B5CF6;
+  --cyan:        #22D3EE;
+  --orange:      #FB923C;
+  --font-display:"Space Grotesk", "Segoe UI", sans-serif;
+  --font-body:   "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:        ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --radius:      20px;
+  --shadow:      0 30px 70px -40px rgba(0,0,0,.9);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  scroll-padding-top:96px;
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(720px 520px at 82% -8%, rgba(139,92,246,.19), transparent 70%),
+    radial-gradient(620px 420px at 4% 4%, rgba(34,211,238,.07), transparent 70%),
+    linear-gradient(180deg,#07090E 0%,#080A11 100%);
+}
+h1,h2,h3,h4,p,figure,blockquote{margin:0}
+ul,ol{list-style:none;margin:0;padding:0}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+img,svg{display:block;max-width:100%}
+::selection{background:var(--lime);color:#0A0C12}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:6px}
+body.menu-open{overflow:hidden}
+
+.container{width:min(1180px, 100% - 2.5rem);margin-inline:auto}
+.icon{width:20px;height:20px;flex-shrink:0}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{
+  position:absolute;left:1rem;top:-100px;z-index:200;
+  padding:.7rem 1.1rem;border-radius:8px;background:var(--lime);color:#0A0C12;
+  font-weight:700;transition:top .2s ease;
+}
+.skip-link:focus{top:1rem}
+
+/* ============================================================
+   2. Botones, pills y tipografía de sección
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  min-height:50px;padding:.8rem 1.35rem;border:1px solid transparent;border-radius:999px;
+  font-size:.94rem;font-weight:600;line-height:1.2;white-space:nowrap;
+  transition:transform .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.btn .icon{width:18px;height:18px}
+.btn--lime{
+  background:var(--lime);color:#0A0C12;
+  box-shadow:0 0 0 1px rgba(199,249,78,.2), 0 18px 36px -22px rgba(199,249,78,.65);
+}
+.btn--lime:hover{background:#D4FF6E;transform:translateY(-2px)}
+.btn--ghost{background:rgba(255,255,255,.03);border-color:var(--line-strong);color:var(--ink)}
+.btn--ghost:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.28);transform:translateY(-2px)}
+.btn--full{width:100%;white-space:normal;text-align:center}
+.btn--sm{min-height:42px;padding:.58rem 1.05rem;font-size:.85rem}
+
+.pill{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.4rem .75rem;border:1px solid var(--line-strong);border-radius:999px;
+  background:rgba(255,255,255,.03);color:#C6CFDC;font-size:.73rem;letter-spacing:.01em;
+}
+.pill__dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(199,249,78,.12);animation:pulse 2.6s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(199,249,78,.1)}50%{box-shadow:0 0 0 7px rgba(199,249,78,.03)}}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--mono);font-size:.68rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--lime);
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor}
+.section{padding:clamp(4rem,8vw,7rem) 0;position:relative}
+.section--tight{padding-top:0}
+.section__head{max-width:690px}
+.section__head--center{margin-inline:auto;text-align:center}
+.section__head h2{
+  margin-top:.85rem;
+  font-family:var(--font-display);
+  font-size:clamp(2rem,4vw,3rem);font-weight:600;
+  line-height:1.04;letter-spacing:-.035em;text-wrap:balance;
+}
+.section__head p{margin-top:1rem;font-size:1rem;color:var(--muted);max-width:62ch}
+.section__head--center p{margin-inline:auto}
+.section__note{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  margin-top:1.6rem;font-size:.8rem;color:var(--muted);
+}
+.section__note .icon{width:16px;height:16px;color:var(--lime)}
+
+.grid-glow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.grid-glow::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(58% 55% at 50% 38%, #000 10%, transparent 100%);
+  mask-image:radial-gradient(58% 55% at 50% 38%, #000 10%, transparent 100%);
+}
+
+/* Reveal */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease, transform .65s ease}
+.js .reveal.is-visible{opacity:1;transform:none}
+
+/* ============================================================
+   3. Barra superior y header
+   ============================================================ */
+.topbar{
+  border-bottom:1px solid rgba(199,249,78,.16);
+  background:rgba(199,249,78,.055);
+  font-size:.76rem;
+}
+.topbar__inner{display:flex;align-items:center;justify-content:center;gap:.55rem;min-height:38px;text-align:center;color:#DCE7BE}
+.topbar__inner .dot{width:6px;height:6px;border-radius:50%;background:var(--lime);flex-shrink:0}
+.topbar a{color:var(--lime);font-weight:600;white-space:nowrap}
+.topbar a:hover{text-decoration:underline;text-underline-offset:3px}
+
+.site-header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(7,9,14,.74);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  transition:box-shadow .2s ease;
+}
+.site-header.is-scrolled{box-shadow:0 16px 40px -30px rgba(0,0,0,.9)}
+.header__inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:1.4rem;min-height:74px}
+
+.brand{display:inline-flex;align-items:center;gap:.65rem;flex-shrink:0}
+.brand__mark{width:36px;height:36px}
+.brand__text{font-family:var(--font-display);font-size:1.28rem;font-weight:600;letter-spacing:-.03em;line-height:1;white-space:nowrap}
+.brand__text span{color:var(--lime)}
+
+.nav{display:flex;align-items:center;gap:1.5rem}
+.nav a{position:relative;padding:.35rem 0;font-size:.86rem;font-weight:500;color:var(--muted);transition:color .18s ease}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--lime);transform:scaleX(0);transform-origin:left;transition:transform .2s ease}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{transform:scaleX(1)}
+
+.header__actions{display:flex;align-items:center;gap:.6rem}
+.nav-toggle{
+  display:none;align-items:center;justify-content:center;
+  width:44px;height:44px;border:1px solid var(--line);border-radius:11px;
+  background:rgba(255,255,255,.04);color:var(--ink);
+}
+.nav-toggle .icon{width:22px;height:22px}
+.nav-toggle .icon-close{display:none}
+.nav-toggle[aria-expanded="true"] .icon-menu{display:none}
+.nav-toggle[aria-expanded="true"] .icon-close{display:block}
+
+/* ============================================================
+   4. Hero
+   ============================================================ */
+.hero{position:relative;overflow:hidden;padding:clamp(3rem,6vw,5rem) 0 0}
+.hero__grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:1.02fr .98fr;
+  gap:clamp(2rem,5vw,4rem);align-items:center;
+}
+.hero__grid > *{min-width:0}
+.hero__copy h1{
+  margin-top:1.2rem;
+  font-family:var(--font-display);
+  font-size:clamp(2.7rem,5.2vw,4.35rem);
+  font-weight:600;line-height:1.01;letter-spacing:-.045em;
+  text-wrap:balance;
+}
+.grad{
+  background:linear-gradient(100deg,#C7F94E 0%,#22D3EE 52%,#A78BFA 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
+.lead{margin-top:1.3rem;max-width:34rem;font-size:clamp(1rem,1.5vw,1.1rem);color:var(--muted)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
+.hero__note{margin-top:.9rem;font-size:.76rem;color:var(--muted-2)}
+.hero__note strong{color:#DCE3EE;font-weight:600}
+.hero__proof{display:flex;align-items:center;gap:.9rem;margin-top:2.1rem;padding-top:1.3rem;border-top:1px solid var(--line)}
+.avatars{display:flex;flex-shrink:0}
+.avatars span{
+  display:grid;place-items:center;width:34px;height:34px;margin-left:-9px;
+  border:2px solid var(--bg);border-radius:50%;
+  font-size:.62rem;font-weight:700;color:#08110B;
+}
+.avatars span:first-child{margin-left:0;background:linear-gradient(135deg,#C7F94E,#8BE04E)}
+.avatars span:nth-child(2){background:linear-gradient(135deg,#22D3EE,#38BDF8)}
+.avatars span:nth-child(3){background:linear-gradient(135deg,#A78BFA,#8B5CF6);color:#fff}
+.avatars span:nth-child(4){background:linear-gradient(135deg,#FB923C,#F97316);color:#fff}
+.hero__proof p{font-size:.78rem;line-height:1.45;color:var(--muted)}
+.hero__proof strong{display:block;color:var(--ink);font-size:.82rem}
+.stars{color:var(--lime);letter-spacing:.14em;font-size:.8rem}
+
+/* Visual: consola */
+.hero__visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:480px}
+.orb{
+  position:absolute;width:440px;height:440px;border-radius:50%;pointer-events:none;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(139,92,246,.55), transparent 58%),
+    radial-gradient(circle at 72% 70%, rgba(34,211,238,.32), transparent 58%);
+  filter:blur(46px);opacity:.8;
+}
+.console{
+  position:relative;z-index:1;width:100%;max-width:520px;min-width:0;
+  border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;
+  background:#0B0F16;
+  box-shadow:0 60px 110px -45px rgba(0,0,0,.95), 0 0 0 1px rgba(255,255,255,.02) inset;
+  transform:rotate(-1.2deg);
+}
+.console::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg, rgba(139,92,246,.1), transparent 32%);
+}
+.console__top{
+  position:relative;display:flex;align-items:center;gap:.6rem;
+  padding:.75rem 1rem;border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.02);
+  font-family:var(--mono);font-size:.68rem;color:var(--muted);
+}
+.dots{display:flex;gap:5px}
+.dots span{width:8px;height:8px;border-radius:50%;background:#3A4354}
+.dots span:first-child{background:#F87171}
+.dots span:nth-child(2){background:#FBBF24}
+.dots span:nth-child(3){background:#4ADE80}
+.console__file{margin-left:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.console__live{margin-left:auto;display:inline-flex;align-items:center;gap:.35rem;color:var(--lime);white-space:nowrap}
+.console__live i{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+.console__code{
+  margin:0;padding:1rem 1.1rem;
+  font-family:var(--mono);font-size:.74rem;line-height:1.8;color:#C9D2E1;
+  overflow-x:auto;
+}
+.console__code .ln{display:inline-block;width:2ch;margin-right:.8rem;color:#465267;user-select:none}
+.kw{color:#C084FC}
+.str{color:#A3E635}
+.fn{color:#22D3EE}
+.console__output{
+  position:relative;padding:1rem 1.1rem 1.1rem;border-top:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(199,249,78,.045), transparent);
+}
+.console__output .console__label{font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+.console__output ul{margin-top:.5rem;display:grid;gap:.2rem}
+.console__output li{display:flex;align-items:center;gap:.45rem;font-size:.76rem;color:#D5DEEA}
+.console__output .check{color:var(--lime);font-weight:700}
+.console__output .meta{margin-left:auto;font-family:var(--mono);font-size:.62rem;color:var(--muted-2);white-space:nowrap}
+
+.float{
+  position:absolute;z-index:2;display:flex;align-items:center;gap:.65rem;
+  padding:.65rem .8rem;border:1px solid var(--line-strong);border-radius:14px;
+  background:rgba(12,16,24,.86);backdrop-filter:blur(16px);
+  box-shadow:0 24px 50px -30px rgba(0,0,0,.95);
+}
+.float__value{font-family:var(--font-display);font-size:1.05rem;font-weight:600;line-height:1}
+.float__label{font-size:.6rem;color:var(--muted);line-height:1.3}
+.float__spark{width:58px;height:22px;color:var(--lime)}
+.float--1{top:-10%;right:-4%}
+
+/* ============================================================
+   5. Herramientas y métricas
+   ============================================================ */
+.tools{margin-top:clamp(2.5rem,5vw,4rem);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tools__inner{display:flex;align-items:center;justify-content:space-between;gap:1.2rem 2rem;flex-wrap:wrap;padding:1.3rem 0}
+.tools p{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+.tools ul{display:flex;align-items:center;flex-wrap:wrap;gap:.7rem 1.7rem}
+.tools li{font-family:var(--font-display);font-size:.96rem;font-weight:500;color:#7C8799}
+
+.stats{border-bottom:1px solid var(--line)}
+.stats__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;padding:2rem 0}
+.stat b{display:block;font-family:var(--font-display);font-size:clamp(1.7rem,3vw,2.2rem);font-weight:600;line-height:1;color:var(--lime);letter-spacing:-.02em}
+.stat span{display:block;margin-top:.4rem;font-size:.76rem;color:var(--muted)}
+.stat + .stat{border-left:1px solid var(--line);padding-left:1.5rem}
+
+/* ============================================================
+   6. Bento de plataforma
+   ============================================================ */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem;margin-top:2.6rem}
+.bento__card{
+  position:relative;overflow:hidden;min-width:0;
+  padding:1.5rem;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  transition:border-color .2s ease, transform .2s ease;
+}
+.bento__card:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.bento__card--chat{grid-column:span 7}
+.bento__card--flow{grid-column:span 5}
+.bento__card--templates{grid-column:span 5}
+.bento__card--dash{grid-column:span 7}
+.bento__icon{
+  display:grid;place-items:center;width:40px;height:40px;margin-bottom:1rem;
+  border-radius:11px;border:1px solid rgba(199,249,78,.22);background:var(--lime-soft);color:var(--lime);
+}
+.bento__icon .icon{width:19px;height:19px}
+.bento__icon--violet{border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.12);color:#A78BFA}
+.bento__icon--cyan{border-color:rgba(34,211,238,.28);background:rgba(34,211,238,.1);color:var(--cyan)}
+.bento__card h3{font-family:var(--font-display);font-size:1.12rem;font-weight:600;line-height:1.25;letter-spacing:-.01em}
+.bento__card > p{margin-top:.4rem;font-size:.83rem;color:var(--muted);max-width:44ch}
+
+.chat{display:grid;gap:.55rem;margin-top:1.3rem}
+.chat__bubble{max-width:90%;padding:.6rem .8rem;border-radius:13px;font-size:.76rem;line-height:1.5}
+.chat__bubble--user{margin-left:auto;border:1px solid rgba(139,92,246,.3);background:rgba(139,92,246,.14);border-bottom-right-radius:4px}
+.chat__bubble--ai{display:flex;gap:.5rem;align-items:flex-start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-bottom-left-radius:4px}
+.chat__avatar{display:grid;place-items:center;width:22px;height:22px;flex-shrink:0;border-radius:50%;background:var(--lime);color:#0A0C12;font-size:.62rem;font-weight:800}
+.chat__input{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:.2rem;padding:.55rem .7rem;border:1px solid var(--line);border-radius:999px;background:rgba(0,0,0,.18);font-size:.7rem;color:var(--muted-2)}
+.chat__send{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--lime);color:#0A0C12;font-weight:700;font-size:.75rem}
+
+.flow{display:grid;margin-top:1.3rem}
+.flow__step{
+  position:relative;display:flex;align-items:center;gap:.6rem;
+  padding:.55rem .65rem;border:1px solid var(--line);border-radius:9px;
+  background:rgba(255,255,255,.025);font-size:.73rem;color:#CBD5E1;
+}
+.flow__step + .flow__step{margin-top:.5rem}
+.flow__step + .flow__step::before{
+  content:"";position:absolute;left:1.22rem;top:-.5rem;width:1px;height:.5rem;background:var(--line-strong);
+}
+.flow__dot{width:8px;height:8px;flex-shrink:0;border-radius:50%;background:var(--lime);box-shadow:0 0 9px rgba(199,249,78,.55)}
+.flow__dot--violet{background:var(--violet);box-shadow:0 0 9px rgba(139,92,246,.55)}
+.flow__dot--cyan{background:var(--cyan);box-shadow:0 0 9px rgba(34,211,238,.55)}
+.flow__step b{margin-left:auto;font-family:var(--mono);font-size:.56rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2);white-space:nowrap}
+
+.files{display:grid;gap:.4rem;margin-top:1.2rem}
+.file{display:flex;align-items:center;gap:.5rem;padding:.5rem .6rem;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.02);font-family:var(--mono);font-size:.68rem;color:#B9C4D4}
+.file .icon{width:14px;height:14px;color:var(--muted-2)}
+.file .ext{margin-left:auto;font-size:.56rem;color:var(--muted-2)}
+.files__badge{display:inline-flex;align-items:center;gap:.35rem;margin-top:.8rem;padding:.3rem .55rem;border:1px solid rgba(199,249,78,.25);border-radius:999px;background:rgba(199,249,78,.07);font-family:var(--mono);font-size:.6rem;color:var(--lime)}
+
+.chart{display:flex;align-items:flex-end;gap:.45rem;height:112px;margin-top:1.4rem;padding-bottom:.35rem;border-bottom:1px dashed var(--line-strong)}
+.chart span{
+  flex:1;min-width:0;border-radius:5px 5px 2px 2px;
+  background:linear-gradient(180deg, var(--lime), rgba(199,249,78,.14));
+  opacity:.85;
+}
+.chart span:nth-child(2n){background:linear-gradient(180deg, #A78BFA, rgba(139,92,246,.14))}
+.chart__meta{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:.7rem;font-size:.7rem;color:var(--muted)}
+.chart__meta b{font-family:var(--font-display);font-size:1.05rem;color:var(--ink);font-weight:600}
+
+/* ============================================================
+   7. Cursos
+   ============================================================ */
+.courses{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.6rem}
+.course{
+  display:flex;flex-direction:column;min-width:0;
+  padding:1.35rem;border:1px solid var(--line);border-radius:18px;
+  background:rgba(255,255,255,.02);
+  transition:border-color .2s ease, transform .2s ease, background-color .2s ease;
+}
+.course:hover{border-color:var(--line-strong);background:rgba(255,255,255,.035);transform:translateY(-3px)}
+.course__top{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:1.15rem}
+.tag{
+  padding:.28rem .5rem;border:1px solid rgba(199,249,78,.24);border-radius:999px;
+  background:rgba(199,249,78,.07);color:var(--lime);
+  font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.course__len{font-family:var(--mono);font-size:.6rem;color:var(--muted-2);white-space:nowrap}
+.course h3{font-family:var(--font-display);font-size:1.04rem;font-weight:600;line-height:1.28;letter-spacing:-.01em}
+.course p{margin-top:.5rem;font-size:.8rem;line-height:1.55;color:var(--muted)}
+.course ul{margin-top:1rem;display:grid;gap:.35rem}
+.course li{display:flex;align-items:flex-start;gap:.4rem;font-size:.72rem;color:#AEB9C9}
+.course li .icon{width:14px;height:14px;margin-top:.12rem;color:var(--lime)}
+.course__foot{
+  display:flex;align-items:center;gap:.4rem;margin-top:auto;padding-top:1.1rem;
+  border-top:1px solid var(--line);font-size:.65rem;color:var(--muted-2);
+}
+.course__foot .icon{width:13px;height:13px;color:var(--lime)}
+
+/* ============================================================
+   8. Planes de mentoría
+   ============================================================ */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.8rem;align-items:stretch}
+.plan{
+  position:relative;display:flex;flex-direction:column;min-width:0;
+  padding:1.6rem;border:1px solid var(--line);border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012));
+}
+.plan--featured{
+  border-color:rgba(199,249,78,.4);
+  background:linear-gradient(180deg, rgba(199,249,78,.07), rgba(15,19,28,.95) 55%);
+  box-shadow:0 0 0 1px rgba(199,249,78,.1), 0 40px 80px -55px rgba(199,249,78,.35);
+  transform:translateY(-6px);
+}
+.plan__badge{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  padding:.3rem .62rem;border-radius:999px;background:var(--lime);color:#0A0C12;
+  font-family:var(--mono);font-size:.56rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;
+}
+.plan__name{font-family:var(--font-display);font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
+.plan__desc{margin-top:.35rem;font-size:.78rem;line-height:1.5;color:var(--muted);min-height:2.3em}
+.plan__price{display:flex;align-items:flex-start;gap:.25rem;margin-top:1.1rem;font-family:var(--font-display);font-size:2.7rem;font-weight:600;line-height:1;letter-spacing:-.045em}
+.plan__price .cur{font-family:var(--font-body);font-size:.72rem;font-weight:600;letter-spacing:.02em;color:var(--muted);margin-top:.45rem}
+.plan__per{margin-top:.4rem;font-size:.7rem;color:var(--muted)}
+.plan ul{display:grid;gap:.5rem;margin:1.3rem 0 1.5rem}
+.plan li{display:flex;align-items:flex-start;gap:.45rem;font-size:.78rem;line-height:1.45;color:#B9C4D4}
+.plan li .icon{width:15px;height:15px;margin-top:.12rem;color:var(--lime)}
+.plan .btn{margin-top:auto}
+
+/* ============================================================
+   9. Proceso
+   ============================================================ */
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.6rem}
+.process__item{position:relative;padding-top:1.4rem;border-top:1px solid var(--line)}
+.process__item::before{content:"";position:absolute;top:-3px;left:0;width:5px;height:5px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px rgba(199,249,78,.6)}
+.process__num{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;color:var(--lime)}
+.process__item h3{margin-top:.55rem;font-family:var(--font-display);font-size:1.02rem;font-weight:600;line-height:1.3}
+.process__item p{margin-top:.4rem;font-size:.78rem;color:var(--muted)}
+
+/* ============================================================
+   10. Testimonios
+   ============================================================ */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.6rem}
+.testimonial{
+  display:flex;flex-direction:column;min-width:0;
+  padding:1.5rem;border:1px solid var(--line);border-radius:18px;
+  background:rgba(255,255,255,.02);
+}
+.testimonial blockquote{margin-top:.9rem}
+.testimonial blockquote p{font-size:.86rem;line-height:1.6;color:#D7DFEA}
+.testimonial figcaption{display:flex;align-items:center;gap:.65rem;margin-top:auto;padding-top:1.3rem}
+.avatar{
+  display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;border-radius:50%;
+  background:linear-gradient(135deg,#C7F94E,#22D3EE);color:#08110B;
+  font-size:.66rem;font-weight:800;
+}
+.testimonial:nth-child(2) .avatar{background:linear-gradient(135deg,#A78BFA,#8B5CF6);color:#fff}
+.testimonial:nth-child(3) .avatar{background:linear-gradient(135deg,#FB923C,#F43F5E);color:#fff}
+.testimonial figcaption strong{display:block;font-size:.8rem;font-weight:600;line-height:1.3}
+.testimonial figcaption span{display:block;font-size:.68rem;color:var(--muted-2)}
+
+/* ============================================================
+   11. FAQ
+   ============================================================ */
+.faq{display:grid;gap:.6rem;max-width:820px;margin:2.6rem auto 0}
+.faq details{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02);padding:0 1.15rem;transition:border-color .18s ease}
+.faq details[open]{border-color:var(--line-strong)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 0;font-size:.9rem;font-weight:500;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .plus{width:18px;height:18px;color:var(--lime);transition:transform .2s ease}
+.faq details[open] summary .plus{transform:rotate(45deg)}
+.faq details p{padding-bottom:1.1rem;font-size:.84rem;line-height:1.65;color:var(--muted)}
+
+/* ============================================================
+   12. CTA final + formulario
+   ============================================================ */
+.cta{padding:clamp(3.5rem,7vw,6rem) 0}
+.cta__panel{
+  position:relative;overflow:hidden;
+  padding:clamp(1.5rem,4vw,3rem);border:1px solid var(--line-strong);border-radius:28px;
+  background:
+    linear-gradient(135deg, rgba(139,92,246,.17), rgba(34,211,238,.06) 50%, rgba(199,249,78,.08));
+}
+.cta__panel::before{
+  content:"";position:absolute;width:520px;height:520px;top:-260px;right:-120px;border-radius:50%;
+  background:radial-gradient(circle, rgba(199,249,78,.2), transparent 70%);pointer-events:none;
+}
+.cta__grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+.cta__copy h2{
+  margin-top:.8rem;font-family:var(--font-display);
+  font-size:clamp(1.9rem,3.7vw,2.8rem);font-weight:600;line-height:1.05;letter-spacing:-.035em;text-wrap:balance;
+}
+.cta__copy > p{margin-top:1rem;color:#B4BFCE;max-width:40ch}
+.cta__points{display:grid;gap:.55rem;margin-top:1.5rem}
+.cta__points li{display:flex;align-items:flex-start;gap:.5rem;font-size:.8rem;color:#C8D2DF}
+.cta__points .icon{width:16px;height:16px;margin-top:.15rem;color:var(--lime)}
+.cta__mail{margin-top:1.6rem;font-size:.8rem;color:var(--muted)}
+.cta__mail a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cta__mail a:hover{color:var(--lime)}
+
+.form-card{
+  min-width:0;padding:clamp(1.2rem,3vw,1.8rem);
+  border:1px solid var(--line-strong);border-radius:20px;
+  background:rgba(8,11,17,.78);backdrop-filter:blur(20px);
+  box-shadow:var(--shadow);
+}
+.form-card h3{font-family:var(--font-display);font-size:1.1rem;font-weight:600;letter-spacing:-.01em}
+.form-card > p{margin-top:.25rem;font-size:.74rem;color:var(--muted)}
+.form__hint{
+  display:none;margin-top:.8rem;padding:.45rem .6rem;border:1px solid rgba(199,249,78,.22);border-radius:8px;
+  background:rgba(199,249,78,.07);font-size:.7rem;color:#DCE7BE;
+}
+.form__hint.is-visible{display:block}
+.form__hint strong{color:var(--lime)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-top:1.2rem}
+.field{display:flex;flex-direction:column;min-width:0}
+.field--full{grid-column:1/-1}
+.field label{margin-bottom:.32rem;font-size:.72rem;font-weight:600;color:#DCE3EE}
+.field input,.field select,.field textarea{
+  width:100%;min-height:44px;padding:.68rem .8rem;
+  border:1px solid var(--line);border-radius:9px;
+  background:rgba(255,255,255,.04);color:var(--ink);
+  font:inherit;font-size:.86rem;
+  transition:border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.field textarea{min-height:96px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:#677385}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:rgba(199,249,78,.65);background:rgba(255,255,255,.055);
+  box-shadow:0 0 0 3px rgba(199,249,78,.12);
+}
+.field select{
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2398A3B3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .7rem center;background-size:15px;
+  padding-right:2.2rem;
+}
+.consent{display:flex;align-items:flex-start;gap:.5rem;margin-top:.9rem;font-size:.7rem;line-height:1.5;color:var(--muted);cursor:pointer}
+.consent input{
+  -webkit-appearance:none;appearance:none;
+  width:16px;height:16px;min-height:auto;margin:.15rem 0 0;flex-shrink:0;
+  border:1px solid var(--line-strong);border-radius:4px;
+  background:rgba(255,255,255,.04);
+  cursor:pointer;transition:background-color .15s ease,border-color .15s ease;
+}
+.consent input:checked{
+  border-color:var(--lime);background-color:var(--lime);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A0C12' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:11px;
+}
+.form-card .btn{margin-top:1rem}
+.form__small{margin-top:.7rem;font-size:.66rem;line-height:1.5;color:var(--muted-2)}
+.form__small a{color:#C8D2DF;text-decoration:underline;text-underline-offset:2px}
+.form__status{
+  margin-top:.8rem;padding:.7rem .8rem;border:1px solid rgba(199,249,78,.25);border-radius:9px;
+  background:rgba(199,249,78,.08);font-size:.75rem;line-height:1.5;color:#E6F3C6;
+}
+.form__status a{color:var(--lime);font-weight:600;text-decoration:underline}
+
+/* ============================================================
+   13. Footer
+   ============================================================ */
+.footer{border-top:1px solid var(--line);background:#06080D;padding:clamp(3rem,6vw,4.5rem) 0 0;color:var(--muted)}
+.footer__grid{display:grid;grid-template-columns:1.55fr 1fr 1fr 1.2fr;gap:2rem}
+.footer .brand__text{color:var(--ink)}
+.footer__about{margin-top:1rem;max-width:30ch;font-size:.82rem;line-height:1.65;color:var(--muted)}
+.footer__social{display:flex;gap:1rem;margin-top:1.2rem;font-size:.74rem}
+.footer__social a{color:#C2CCDA}
+.footer__social a:hover{color:var(--lime)}
+.footer h3{margin-bottom:.9rem;font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#E8EDF6}
+.footer ul{display:grid;gap:.5rem;font-size:.8rem}
+.footer ul a:hover{color:var(--lime)}
+.footer__contact a{color:#DCE3EE;font-weight:500}
+.footer__bottom{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  margin-top:2.5rem;padding:1.3rem 0;border-top:1px solid var(--line);
+  font-size:.68rem;color:var(--muted-2);
+}
+.footer__bottom ul{display:flex;gap:1.1rem}
+.footer__legal{max-width:92ch;padding-bottom:1.5rem;font-size:.64rem;line-height:1.6;color:var(--muted-2)}
+
+/* CTA sticky mobile */
+.mobile-cta{display:none}
+
+/* ============================================================
+   14. Responsive
+   ============================================================ */
+@media (max-width:1100px){
+  .courses{grid-template-columns:repeat(2,1fr)}
+  .nav{gap:1.1rem}
+  .float--1{right:0}
+}
+
+@media (max-width:960px){
+  .hero__grid{grid-template-columns:1fr;gap:3rem}
+  .hero__copy{max-width:640px}
+  .hero__visual{min-height:0;max-width:560px;width:100%;margin-inline:auto;padding:1.5rem 0}
+  .orb{width:340px;height:340px}
+  .bento{grid-template-columns:1fr 1fr}
+  .bento__card--chat,.bento__card--flow,.bento__card--templates,.bento__card--dash{grid-column:span 1}
+  .plans{grid-template-columns:1fr}
+  .plan--featured{transform:none}
+  .plan__desc{min-height:0}
+  .process{grid-template-columns:repeat(2,1fr)}
+  .testimonials{grid-template-columns:1fr 1fr}
+  .testimonial:last-child{grid-column:1/-1}
+  .site-header{background:rgba(7,9,14,.9)}
+}
+
+@media (max-width:820px){
+  html{scroll-padding-top:86px}
+  .nav-toggle{display:inline-flex}
+  .nav{
+    position:absolute;left:0;right:0;top:calc(100% + 1px);
+    display:grid;gap:.1rem;padding:.9rem 1.15rem 1.2rem;
+    border-bottom:1px solid var(--line);background:rgba(7,9,14,.98);
+    box-shadow:0 30px 50px -35px rgba(0,0,0,.95);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s ease, transform .2s ease, visibility .2s;
+  }
+  .nav.is-open{opacity:1;visibility:visible;transform:none}
+  .nav a{padding:.8rem .1rem;font-size:.92rem;border-bottom:1px solid var(--line)}
+  .nav a::after{display:none}
+  .nav a:last-child{border-bottom:0}
+  .cta__grid{grid-template-columns:1fr;gap:2.2rem}
+  .cta__copy{max-width:640px}
+  .footer__grid{grid-template-columns:1fr 1fr;gap:2rem}
+}
+
+@media (max-width:720px){
+  .stats__grid{grid-template-columns:1fr 1fr;gap:1.3rem 1.5rem}
+  .stat{padding-left:0;border-left:0;padding-top:1.2rem;border-top:1px solid var(--line)}
+  .stat:nth-child(-n+2){padding-top:0;border-top:0}
+  .bento{grid-template-columns:1fr}
+  .testimonials{grid-template-columns:1fr}
+  .testimonial:last-child{grid-column:auto}
+}
+
+@media (max-width:640px){
+  .container{width:calc(100% - 1.75rem)}
+  .topbar__inner{font-size:.7rem;justify-content:flex-start;gap:.45rem;min-height:36px;padding:.25rem 0}
+  .header__inner{min-height:68px;gap:.7rem}
+  .brand__text{font-size:1.16rem}
+  .brand__mark{width:33px;height:33px}
+  .header__actions .btn{display:none}
+  .hero{padding-top:2.2rem}
+  .hero__copy h1{font-size:clamp(2.45rem,11vw,3.2rem)}
+  .hero__cta .btn{flex:1 1 auto}
+  .hero__proof{gap:.7rem}
+  .console{transform:none}
+  .float{display:none}
+  .courses{grid-template-columns:1fr}
+  .process{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .field--full{grid-column:auto}
+  .footer__grid{grid-template-columns:1fr;gap:1.8rem}
+  .footer__bottom{justify-content:flex-start}
+  .mobile-cta{
+    display:block;position:fixed;left:0;right:0;bottom:0;z-index:70;
+    padding:.7rem .9rem calc(.7rem + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);background:rgba(7,9,14,.94);
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  }
+  body{padding-bottom:78px}
+}
+
+@media (max-width:400px){
+  .tools ul{gap:.5rem 1.1rem}
+  .tools li{font-size:.86rem}
+  .plan__price{font-size:2.4rem}
+  .stats__grid{gap:1.1rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .js .reveal{opacity:1;transform:none}
+  .pill__dot{animation:none}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- Sprite de iconos -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.6 8.6 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M9 6h4a3 3 0 0 1 3 3v6"/><path d="m14 13 2 2 2-2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21V11m5 10V5m5 16v-7"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+</svg>
+
+<div class="topbar">
+  <div class="container topbar__inner">
+    <span class="dot" aria-hidden="true"></span>
+    <span>Mentorías 1:1 con cupos limitados</span>
+    <span aria-hidden="true">·</span>
+    <a href="#mentorias">Ver planes <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<header class="site-header" id="inicio">
+  <div class="container header__inner">
+    <a class="brand" href="#inicio" aria-label="Nodo IA — Inicio">
+      <svg class="brand__mark" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="34" height="34" rx="10" fill="#0D1119" stroke="#2B3242" stroke-width="1.2"/>
+        <path d="M10 25 18 11l8 14" fill="none" stroke="#C7F94E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="18" cy="11" r="3" fill="#C7F94E"/>
+        <circle cx="10" cy="25" r="3" fill="#8B5CF6"/>
+        <circle cx="26" cy="25" r="3" fill="#22D3EE"/>
+      </svg>
+      <span class="brand__text">Nodo <span>IA</span></span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="#cursos">Cursos</a>
+      <a href="#software">Software</a>
+      <a href="#mentorias">Mentorías</a>
+      <a href="#casos">Casos</a>
+      <a href="#preguntas">FAQ</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--lime btn--sm" href="#reservar">Reservar mentoría</a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú">
+        <svg class="icon icon-menu" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="icon icon-close" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="grid-glow" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <span class="pill"><span class="pill__dot" aria-hidden="true"></span> Software + cursos + mentoría 1:1</span>
+        <h1 id="hero-title">Construye con IA.<br><span class="grad">Sin perder meses.</span></h1>
+        <p class="lead">Aprende con cursos prácticos, usa nuestro software y trabaja tu proyecto con un mentor. De la idea al sistema funcionando, con acompañamiento real.</p>
+
+        <div class="hero__cta">
+          <a class="btn btn--lime" href="#mentorias">
+            Ver mentorías
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#cursos">Explorar cursos</a>
+        </div>
+        <p class="hero__note">Planes desde <strong>US$ 1.000</strong> por mentoría.</p>
+
+        <div class="hero__proof">
+          <div class="avatars" aria-hidden="true"><span>MG</span><span>DR</span><span>CM</span><span>+</span></div>
+          <p>
+            <strong><span class="stars" aria-hidden="true">★★★★★</span> 4,9 / 5</strong>
+            Más de 2.400 alumnos en 38 países
+          </p>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="orb" aria-hidden="true"></div>
+
+        <div class="console" role="img" aria-label="Ejemplo de código para crear un agente de IA que califica leads y agenda reuniones">
+          <div class="console__top">
+            <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="console__file">agente_ventas.py</span>
+            <span class="console__live"><i aria-hidden="true"></i> live</span>
+          </div>
+          <pre class="console__code"><code><span class="ln">01</span><span class="kw">from</span> nodo <span class="kw">import</span> Agent
+
+<span class="ln">02</span>agente = Agent(
+<span class="ln">03</span>  nombre=<span class="str">"Sofía"</span>,
+<span class="ln">04</span>  canal=<span class="str">"whatsapp"</span>,
+<span class="ln">05</span>  objetivo=<span class="str">"calificar leads"</span>
+<span class="ln">06</span>)
+
+<span class="ln">07</span>agente.<span class="fn">entrenar</span>(<span class="str">"mi_negocio.md"</span>)
+<span class="ln">08</span>agente.<span class="fn">lanzar</span>()</code></pre>
+          <div class="console__output">
+            <p class="console__label">Salida · hace 2 segundos</p>
+            <ul>
+              <li><span class="check" aria-hidden="true">✓</span> Lead calificado <span class="meta">US$ 2.400</span></li>
+              <li><span class="check" aria-hidden="true">✓</span> Reunión agendada <span class="meta">jueves 10:30</span></li>
+              <li><span class="check" aria-hidden="true">✓</span> CRM actualizado <span class="meta">HubSpot</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="float float--1" aria-hidden="true">
+          <div>
+            <div class="float__value">180 h</div>
+            <div class="float__label">ahorradas por mes</div>
+          </div>
+          <svg class="float__spark" viewBox="0 0 64 24" fill="none">
+            <path d="M1 20 9 16 17 18 25 11 33 13 41 7 49 9 57 3 63 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="container tools">
+      <div class="tools__inner">
+        <p>Herramientas que vas a dominar</p>
+        <ul>
+          <li>OpenAI</li>
+          <li>Claude</li>
+          <li>Gemini</li>
+          <li>n8n</li>
+          <li>Make</li>
+          <li>Python</li>
+          <li>Supabase</li>
+          <li>LangChain</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="container stats__grid">
+        <div class="stat"><b>+2.400</b><span>alumnos formados</span></div>
+        <div class="stat"><b>38</b><span>países en la comunidad</span></div>
+        <div class="stat"><b>120+</b><span>automatizaciones creadas</span></div>
+        <div class="stat"><b>4,9/5</b><span>satisfacción promedio</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOFTWARE ================= -->
+  <section class="section" id="software" aria-labelledby="software-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow">01 — Plataforma</p>
+        <h2 id="software-title">Todo lo que necesitas para construir, en un solo lugar</h2>
+        <p>Software, plantillas y formación práctica. Sin suscripciones separadas ni herramientas sueltas: entras, construyes y lanzas.</p>
+      </div>
+
+      <div class="bento">
+        <article class="bento__card bento__card--chat reveal">
+          <div class="bento__icon"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></div>
+          <h3>Agentes que atienden por ti</h3>
+          <p>Entrena un agente con tu conocimiento y conéctalo a WhatsApp, Instagram o tu web.</p>
+          <div class="chat" aria-hidden="true">
+            <div class="chat__bubble chat__bubble--user">Quiero automatizar el seguimiento de leads.</div>
+            <div class="chat__bubble chat__bubble--ai">
+              <span class="chat__avatar">N</span>
+              <span>Listo. Ya conecté tu CRM y respondí 12 consultas. ¿Agendamos una demo?</span>
+            </div>
+            <div class="chat__input"><span>Escribe un mensaje…</span><span class="chat__send">↗</span></div>
+          </div>
+        </article>
+
+        <article class="bento__card bento__card--flow reveal">
+          <div class="bento__icon bento__icon--violet"><svg class="icon" aria-hidden="true"><use href="#i-flow"/></svg></div>
+          <h3>Automatizaciones sin código</h3>
+          <p>Conecta tus apps y deja que los flujos trabajen mientras duermes.</p>
+          <div class="flow" aria-hidden="true">
+            <div class="flow__step"><span class="flow__dot"></span><span>Nuevo mensaje en WhatsApp</span><b>trigger</b></div>
+            <div class="flow__step"><span class="flow__dot flow__dot--violet"></span><span>La IA clasifica la intención</span><b>agente</b></div>
+            <div class="flow__step"><span class="flow__dot flow__dot--cyan"></span><span>Actualiza el CRM</span><b>acción</b></div>
+            <div class="flow__step"><span class="flow__dot"></span><span>Envía follow-up personalizado</span><b>email</b></div>
+          </div>
+        </article>
+
+        <article class="bento__card bento__card--templates reveal">
+          <div class="bento__icon bento__icon--cyan"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></div>
+          <h3>Plantillas y prompts probados</h3>
+          <p>Más de 120 recursos listos para copiar, adaptar y lanzar.</p>
+          <div class="files" aria-hidden="true">
+            <div class="file"><svg class="icon"><use href="#i-file"/></svg> prompt_ventas.md <span class="ext">.md</span></div>
+            <div class="file"><svg class="icon"><use href="#i-file"/></svg> flujo_onboarding.json <span class="ext">.json</span></div>
+            <div class="file"><svg class="icon"><use href="#i-file"/></svg> agente_soporte.py <span class="ext">.py</span></div>
+          </div>
+          <span class="files__badge">+120 recursos</span>
+        </article>
+
+        <article class="bento__card bento__card--dash reveal">
+          <div class="bento__icon"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg></div>
+          <h3>Métricas que importan</h3>
+          <p>Mira cuánto tiempo y dinero ahorra tu operación, en tiempo real.</p>
+          <div class="chart" aria-hidden="true">
+            <span style="height:32%"></span>
+            <span style="height:48%"></span>
+            <span style="height:41%"></span>
+            <span style="height:63%"></span>
+            <span style="height:55%"></span>
+            <span style="height:78%"></span>
+            <span style="height:70%"></span>
+            <span style="height:92%"></span>
+          </div>
+          <div class="chart__meta"><span>Horas ahorradas por mes</span><b>180 h</b></div>
+        </article>
+      </div>
+
+      <p class="section__note">
+        <svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg>
+        Todo el software y los cursos están incluidos en tu plan de mentoría.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= CURSOS ================= -->
+  <section class="section section--tight" id="cursos" aria-labelledby="cursos-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow">02 — Cursos</p>
+        <h2 id="cursos-title">Aprende haciendo, no mirando videos</h2>
+        <p>Cursos cortos, proyectos reales y acceso permanente. Elige el punto de partida y avanza a tu ritmo, con un mentor al lado.</p>
+      </div>
+
+      <div class="courses">
+        <article class="course reveal">
+          <div class="course__top"><span class="tag">Inicial</span><span class="course__len">6 h · 12 lecciones</span></div>
+          <h3>Fundamentos de IA</h3>
+          <p>Entiende qué puede —y qué no— hacer la IA y cómo aplicarla a tu negocio.</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Modelos y casos de uso</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Prompting desde cero</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Tu primer flujo con IA</li>
+          </ul>
+          <div class="course__foot"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Incluido en tu mentoría</div>
+        </article>
+
+        <article class="course reveal">
+          <div class="course__top"><span class="tag">Inicial</span><span class="course__len">4 h · 9 lecciones</span></div>
+          <h3>Prompt engineering aplicado</h3>
+          <p>Prompts que producen resultados consistentes para ventas, marketing y soporte.</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Estructuras probadas</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Prompts con contexto</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Evaluación y ajuste</li>
+          </ul>
+          <div class="course__foot"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Incluido en tu mentoría</div>
+        </article>
+
+        <article class="course reveal">
+          <div class="course__top"><span class="tag">Intermedio</span><span class="course__len">12 h · 24 lecciones</span></div>
+          <h3>Agentes con Python</h3>
+          <p>Construye agentes que usan herramientas, memoria y APIs reales.</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Function calling</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Memoria y RAG</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Deploy y monitoreo</li>
+          </ul>
+          <div class="course__foot"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Incluido en tu mentoría</div>
+        </article>
+
+        <article class="course reveal">
+          <div class="course__top"><span class="tag">Intermedio</span><span class="course__len">10 h · 18 lecciones</span></div>
+          <h3>Automatizaciones con n8n</h3>
+          <p>Conecta CRM, WhatsApp y email en flujos que trabajan solos.</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Triggers y webhooks</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Integraciones reales</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Errores y escalado</li>
+          </ul>
+          <div class="course__foot"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Incluido en tu mentoría</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MENTORÍAS ================= -->
+  <section class="section section--tight" id="mentorias" aria-labelledby="mentorias-title">
+    <div class="container">
+      <div class="section__head section__head--center reveal">
+        <p class="eyebrow">03 — Mentorías</p>
+        <h2 id="mentorias-title">Elige cómo quieres avanzar</h2>
+        <p>Sesiones 1:1 por videollamada, con grabación, plantillas y soporte real. Precios en USD por mentoría.</p>
+      </div>
+
+      <div class="plans">
+        <article class="plan reveal">
+          <h3 class="plan__name">Claridad</h3>
+          <p class="plan__desc">Para ordenar la idea y saber exactamente por dónde empezar.</p>
+          <p class="plan__price"><span class="cur">US$</span><span>1.000</span></p>
+          <p class="plan__per">por mentoría · pago único</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> 1 sesión 1:1 de 60 minutos</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Diagnóstico y hoja de ruta</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Grabación + notas de la sesión</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> 7 días de soporte por chat</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Acceso a cursos y plantillas</li>
+          </ul>
+          <a class="btn btn--ghost btn--full" href="#reservar" data-plan="Claridad — US$ 1.000">Reservar Claridad</a>
+        </article>
+
+        <article class="plan plan--featured reveal">
+          <span class="plan__badge">Más elegido</span>
+          <h3 class="plan__name">Implementación</h3>
+          <p class="plan__desc">Para construir tu primer agente o automatización con acompañamiento.</p>
+          <p class="plan__price"><span class="cur">US$</span><span>1.500</span></p>
+          <p class="plan__per">por mentoría · pago único</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> 2 sesiones 1:1 de 60 minutos</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Todo lo incluido en Claridad</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Revisión de tu proyecto</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Plan de implementación paso a paso</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> 14 días de soporte por chat</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Software y plantillas incluidas</li>
+          </ul>
+          <a class="btn btn--lime btn--full" href="#reservar" data-plan="Implementación — US$ 1.500">Reservar Implementación</a>
+        </article>
+
+        <article class="plan reveal">
+          <h3 class="plan__name">Escala</h3>
+          <p class="plan__desc">Para lanzar, medir y optimizar con un socio técnico a tu lado.</p>
+          <p class="plan__price"><span class="cur">US$</span><span>1.800</span></p>
+          <p class="plan__per">por mentoría · pago único</p>
+          <ul>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> 3 sesiones 1:1 de 60 minutos</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Todo lo incluido en Implementación</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Implementación en vivo contigo</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Revisión de código y arquitectura</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> 30 días de soporte prioritario</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg> Sesión de cierre y próximos pasos</li>
+          </ul>
+          <a class="btn btn--ghost btn--full" href="#reservar" data-plan="Escala — US$ 1.800">Reservar Escala</a>
+        </article>
+      </div>
+
+      <p class="section__note">
+        <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+        ¿No sabes cuál elegir? <a href="#reservar" style="color:var(--lime);text-decoration:underline;text-underline-offset:3px">Agenda un diagnóstico gratuito de 15 min</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= PROCESO ================= -->
+  <section class="section section--tight" aria-labelledby="proceso-title">
+    <div class="container">
+      <div class="section__head reveal">
+        <p class="eyebrow">04 — Cómo funciona</p>
+        <h2 id="proceso-title">De la primera conversación al lanzamiento</h2>
+      </div>
+
+      <div class="process">
+        <div class="process__item reveal">
+          <span class="process__num">01</span>
+          <h3>Elige tu plan</h3>
+          <p>Reserva y cuéntanos qué quieres construir. Te confirmamos el cupo y los próximos pasos.</p>
+        </div>
+        <div class="process__item reveal">
+          <span class="process__num">02</span>
+          <h3>Diagnóstico 1:1</h3>
+          <p>Revisamos tu idea, tus procesos y las herramientas que necesitas para ejecutarla.</p>
+        </div>
+        <div class="process__item reveal">
+          <span class="process__num">03</span>
+          <h3>Construye</h3>
+          <p>Implementas con plantillas, revisión de tu proyecto y soporte real entre sesiones.</p>
+        </div>
+        <div class="process__item reveal">
+          <span class="process__num">04</span>
+          <h3>Lanza y mide</h3>
+          <p>Ponemos tu proyecto en producción y definimos qué métricas mirar para mejorarlo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CASOS ================= -->
+  <section class="section section--tight" id="casos" aria-labelledby="casos-title">
+    <div class="container">
+      <div class="section__head section__head--center reveal">
+        <p class="eyebrow">05 — Casos</p>
+        <h2 id="casos-title">Personas que ya están construyendo</h2>
+      </div>
+
+      <div class="testimonials">
+        <figure class="testimonial reveal">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="sr-only">Calificación: 5 de 5 estrellas</span>
+          <blockquote><p>“Automaticé el seguimiento de leads de mi agencia. Pasamos de responder en horas a hacerlo en minutos, sin sumar gente.”</p></blockquote>
+          <figcaption>
+            <span class="avatar" aria-hidden="true">MG</span>
+            <div><strong>Mariana G.</strong><span>Fundadora de agencia · México</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="sr-only">Calificación: 5 de 5 estrellas</span>
+          <blockquote><p>“Llegué con una idea y salí con un agente funcionando en WhatsApp. La mentoría me ahorró semanas de prueba y error.”</p></blockquote>
+          <figcaption>
+            <span class="avatar" aria-hidden="true">DR</span>
+            <div><strong>Diego R.</strong><span>Product manager · Argentina</span></div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="sr-only">Calificación: 5 de 5 estrellas</span>
+          <blockquote><p>“Hoy vendo mis propios workflows. El plan Escala fue clave para pasar de la idea a un servicio que factura.”</p></blockquote>
+          <figcaption>
+            <span class="avatar" aria-hidden="true">CM</span>
+            <div><strong>Carla M.</strong><span>Consultora · Colombia</span></div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section section--tight" id="preguntas" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section__head section__head--center reveal">
+        <p class="eyebrow">06 — Dudas</p>
+        <h2 id="faq-title">Lo que suelen preguntar</h2>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>¿Necesito saber programar?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>No. Empezamos desde donde estás. Para automatizaciones y agentes básicos no hace falta código; si quieres ir más profundo con Python, te guiamos paso a paso.</p>
+        </details>
+        <details>
+          <summary>¿Las mentorías son en vivo?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Sí, son sesiones 1:1 por videollamada. Todas quedan grabadas y recibes las notas y los recursos para volver a revisarlas cuando quieras.</p>
+        </details>
+        <details>
+          <summary>¿Qué incluye el acceso al software?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Acceso a las plantillas de agentes y automatizaciones, la biblioteca de prompts y los dashboards. Te damos acceso al confirmar tu mentoría.</p>
+        </details>
+        <details>
+          <summary>¿Puedo reprogramar una sesión?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Sí. Puedes reprogramar avisando con al menos 24 horas de anticipación, sujeto a disponibilidad de agenda.</p>
+        </details>
+        <details>
+          <summary>¿Cómo se paga la mentoría?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Coordinamos el medio de pago al confirmar tu cupo. El precio es en USD y el pago es único por mentoría, no una suscripción.</p>
+        </details>
+        <details>
+          <summary>¿En qué idioma son las sesiones?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>En español. El material, las plantillas y el código están documentados para que puedas aplicarlos sin barreras.</p>
+        </details>
+        <details>
+          <summary>¿Sirve para mi negocio o mi idea?<svg class="icon plus" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Si tienes procesos repetitivos, atención al cliente, ventas o una idea que quieres validar con IA, sí. En el diagnóstico definimos si la mentoría es el mejor camino.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESERVAR ================= -->
+  <section class="cta" id="reservar" aria-labelledby="reservar-title">
+    <div class="container">
+      <div class="cta__panel">
+        <div class="cta__grid">
+          <div class="cta__copy">
+            <p class="eyebrow">Reserva tu mentoría</p>
+            <h2 id="reservar-title">Tu próxima ventaja empieza con una conversación.</h2>
+            <p>Cuéntanos qué quieres construir. Te respondemos con el plan que mejor se adapta a tu proyecto y a tu momento.</p>
+            <ul class="cta__points">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Respuesta en menos de 24 h hábiles</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg> Sesión 1:1 por videollamada</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg> Diagnóstico inicial sin compromiso</li>
+            </ul>
+            <p class="cta__mail">¿Prefieres escribir directo? <a href="mailto:hola@nodoia.ai">hola@nodoia.ai</a></p>
+          </div>
+
+          <form class="form-card" id="reservaForm" action="mailto:hola@nodoia.ai" method="post" enctype="text/plain" novalidate>
+            <h3>Reserva tu cupo</h3>
+            <p>Completa tus datos y te contactamos.</p>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="nombre">Nombre <span aria-hidden="true">*</span></label>
+                <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre" required>
+              </div>
+              <div class="field">
+                <label for="email">Email <span aria-hidden="true">*</span></label>
+                <input type="email" id="email" name="email" autocomplete="email" placeholder="tu@email.com" required>
+              </div>
+              <div class="field">
+                <label for="whatsapp">WhatsApp (opcional)</label>
+                <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" placeholder="+54 9 11 ...">
+              </div>
+              <div class="field">
+                <label for="plan">Plan <span aria-hidden="true">*</span></label>
+                <select id="plan" name="plan" required>
+                  <option value="" selected disabled>Elige un plan</option>
+                  <option value="Claridad — US$ 1.000">Claridad — US$ 1.000</option>
+                  <option value="Implementación — US$ 1.500">Implementación — US$ 1.500</option>
+                  <option value="Escala — US$ 1.800">Escala — US$ 1.800</option>
+                  <option value="Todavía no lo sé">Todavía no lo sé</option>
+                </select>
+              </div>
+              <div class="field field--full">
+                <label for="objetivo">¿Qué quieres construir? <span aria-hidden="true">*</span></label>
+                <textarea id="objetivo" name="objetivo" placeholder="Ej.: un agente de ventas por WhatsApp para mi agencia." required></textarea>
+              </div>
+            </div>
+
+            <p class="form__hint" id="planHint" role="status" aria-live="polite"></p>
+
+            <label class="consent">
+              <input type="checkbox" name="consentimiento" required>
+              <span>Acepto que Nodo IA me contacte por email o WhatsApp para responder mi consulta.</span>
+            </label>
+
+            <button class="btn btn--lime btn--full" type="submit">
+              Solicitar mi cupo
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </button>
+
+            <p class="form__small">Se abrirá tu cliente de correo con la solicitud lista. También puedes escribir a <a href="mailto:hola@nodoia.ai">hola@nodoia.ai</a>.</p>
+            <p class="form__status" id="formStatus" role="status" aria-live="polite" hidden></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="#inicio" aria-label="Nodo IA — Inicio">
+          <svg class="brand__mark" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
+            <rect x="1" y="1" width="34" height="34" rx="10" fill="#0D1119" stroke="#2B3242" stroke-width="1.2"/>
+            <path d="M10 25 18 11l8 14" fill="none" stroke="#C7F94E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="18" cy="11" r="3" fill="#C7F94E"/>
+            <circle cx="10" cy="25" r="3" fill="#8B5CF6"/>
+            <circle cx="26" cy="25" r="3" fill="#22D3EE"/>
+          </svg>
+          <span class="brand__text">Nodo <span>IA</span></span>
+        </a>
+        <p class="footer__about">Software, cursos y mentoría 1:1 para llevar tu proyecto de IA de la idea al sistema funcionando.</p>
+        <div class="footer__social">
+          <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://youtube.com/" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div>
+        <h3>Programas</h3>
+        <ul>
+          <li><a href="#cursos">Cursos</a></li>
+          <li><a href="#software">Software</a></li>
+          <li><a href="#mentorias">Mentorías</a></li>
+          <li><a href="#casos">Casos</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Recursos</h3>
+        <ul>
+          <li><a href="#preguntas">Preguntas frecuentes</a></li>
+          <li><a href="#reservar">Diagnóstico gratuito</a></li>
+          <li><a href="#reservar">Reservar mentoría</a></li>
+          <li><a href="mailto:hola@nodoia.ai">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contacto</h3>
+        <ul class="footer__contact">
+          <li><a href="mailto:hola@nodoia.ai">hola@nodoia.ai</a></li>
+          <li><a href="https://wa.me/5491155555555?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20mentor%C3%ADas." target="_blank" rel="noopener">+54 9 11 5555-5555</a></li>
+          <li>Lun a Vie · 9 a 18 h (GMT-3)</li>
+          <li>Sesiones online en todo el mundo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© <span id="year">2026</span> Nodo IA. Todos los derechos reservados.</p>
+      <ul>
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Reembolsos</a></li>
+      </ul>
+    </div>
+
+    <p class="footer__legal">Los resultados pueden variar según el punto de partida, el tiempo dedicado y la implementación de cada persona. Nodo IA no está afiliado a OpenAI, Anthropic, Google ni a las demás marcas mencionadas. Precios expresados en dólares estadounidenses (USD).</p>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a class="btn btn--lime btn--full" href="#reservar">
+    Reservar mi mentoría
+    <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>
+  </a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var CONFIG = {
+    email: 'hola@nodoia.ai'
+  };
+
+  var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
+  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+
+  /* ---------- Header + menú móvil ---------- */
+  var header = $('.site-header');
+  var nav = $('#nav');
+  var navToggle = $('#navToggle');
+
+  function onScroll() {
+    if (header) header.classList.toggle('is-scrolled', window.scrollY > 8);
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  function setMenu(open) {
+    if (!nav || !navToggle) return;
+    nav.classList.toggle('is-open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    document.body.classList.toggle('menu-open', open);
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener('click', function () {
+      setMenu(navToggle.getAttribute('aria-expanded') !== 'true');
+    });
+  }
+  if (nav) {
+    $$('a', nav).forEach(function (link) {
+      link.addEventListener('click', function () { setMenu(false); });
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setMenu(false);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 820) setMenu(false);
+  });
+
+  /* ---------- Preselección de plan ---------- */
+  var planSelect = $('#plan');
+  var planHint = $('#planHint');
+
+  function updatePlanHint(value) {
+    if (!planHint) return;
+    if (value) {
+      planHint.innerHTML = 'Plan seleccionado: <strong>' + value + '</strong>';
+      planHint.classList.add('is-visible');
+    } else {
+      planHint.classList.remove('is-visible');
+      planHint.textContent = '';
+    }
+  }
+
+  $$('[data-plan]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var value = link.getAttribute('data-plan');
+      if (planSelect) {
+        planSelect.value = value;
+        updatePlanHint(value);
+      }
+    });
+  });
+
+  if (planSelect) {
+    planSelect.addEventListener('change', function () {
+      updatePlanHint(planSelect.value);
+    });
+  }
+
+  /* ---------- Formulario → email ---------- */
+  var form = $('#reservaForm');
+  var formStatus = $('#formStatus');
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var data = new FormData(form);
+      var nombre = String(data.get('nombre') || '').trim();
+      var email = String(data.get('email') || '').trim();
+      var whatsapp = String(data.get('whatsapp') || '').trim();
+      var plan = String(data.get('plan') || '').trim();
+      var objetivo = String(data.get('objetivo') || '').trim();
+
+      var subject = 'Solicitud de mentoría — ' + plan;
+      var body = [
+        'Hola, soy ' + nombre + '.',
+        '',
+        'Plan de interés: ' + plan,
+        'Email: ' + email,
+        whatsapp ? 'WhatsApp: ' + whatsapp : null,
+        '',
+        'Qué quiero construir:',
+        objetivo || '(Sin detalle)'
+      ].filter(function (line) { return line !== null; }).join('\n');
+
+      var url = 'mailto:' + CONFIG.email +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+
+      if (formStatus) {
+        formStatus.hidden = false;
+        formStatus.textContent = 'Abrimos tu cliente de correo con la solicitud lista. ';
+        var link = document.createElement('a');
+        link.href = url;
+        link.textContent = 'Si no se abrió, toca aquí.';
+        formStatus.appendChild(link);
+      }
+
+      window.open(url, '_self');
+    });
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  var revealEls = $$('.reveal');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: 0.08 });
+
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ---------- Año ---------- */
+  var year = $('#year');
+  if (year) year.textContent = new Date().getFullYear();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Nodo IA",
+  "description": "Software, cursos y mentorías 1:1 para construir con inteligencia artificial.",
+  "url": "https://nodoia.ai/",
+  "email": "hola@nodoia.ai",
+  "areaServed": "LATAM",
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Mentoría Claridad",
+      "price": "1000",
+      "priceCurrency": "USD",
+      "description": "Una sesión 1:1 de 60 minutos, diagnóstico, hoja de ruta y 7 días de soporte."
+    },
+    {
+      "@type": "Offer",
+      "name": "Mentoría Implementación",
+      "price": "1500",
+      "priceCurrency": "USD",
+      "description": "Dos sesiones 1:1, revisión de proyecto, plan de implementación y 14 días de soporte."
+    },
+    {
+      "@type": "Offer",
+      "name": "Mentoría Escala",
+      "price": "1800",
+      "priceCurrency": "USD",
+      "description": "Tres sesiones 1:1, implementación en vivo, revisión de código y 30 días de soporte prioritario."
+    }
+  ]
+}
+</script>
+</body>
+</html>
